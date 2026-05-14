@@ -1,0 +1,445 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ── Light mode CSS variables ── */
+:root {
+  /* Backgrounds */
+  --c-bg:        #F3FAF4;
+  --c-surface:   #ffffff;
+  --c-surface-2: #F3FAF4;
+  --c-hero-from: #ffffff;
+  --c-hero-to:   #EDFAF0;
+  --c-accent-bg: #E6F5EB;
+
+  /* Text */
+  --c-text:   #1A2C1C;
+  --c-text-2: #4E6B52;
+  --c-text-3: #89A88D;
+
+  /* Accent */
+  --c-accent:      #3DAA76;
+  --c-accent-dark: #2C8A5D;
+
+  /* Borders */
+  --c-border:   #CEE8D1;
+  --c-border-2: #B8DDB9;
+
+  /* Nav (scrolled) */
+  --c-nav-bg: rgba(237, 250, 240, 0.88);
+
+  /* Badges */
+  --c-badge-game-bg:     #E6F5EB;
+  --c-badge-game-text:   #2C8A5D;
+  --c-badge-game-border: #B8DDB9;
+  --c-badge-ex-bg:       #EDF5FF;
+  --c-badge-ex-text:     #2B5BA8;
+  --c-badge-ex-border:   #BDD4F5;
+  --c-badge-mu-bg:       #FFF0F5;
+  --c-badge-mu-text:     #A0336A;
+  --c-badge-mu-border:   #F5BBD4;
+  --c-award-bg:          #FEF9E7;
+  --c-award-text:        #92400E;
+  --c-award-border:      #F5D86A;
+
+  /* Tags */
+  --c-tag-bg:     #F3FAF4;
+  --c-tag-text:   #4E6B52;
+  --c-tag-border: #CEE8D1;
+
+  /* Thumbnail placeholders */
+  --c-thumb-game-from: #EDFAF0;
+  --c-thumb-game-to:   #CEE8D1;
+  --c-thumb-ex-from:   #EDF5FF;
+  --c-thumb-ex-to:     #BFDBFE;
+  --c-thumb-mu-from:   #FFF0F5;
+  --c-thumb-mu-to:     #FBCFE8;
+
+  /* Background blobs */
+  --c-blob-a: #B2E8C4;
+  --c-blob-b: #8EDCB0;
+  --c-blob-c: #C4EDD4;
+}
+
+/* ── Spring theme (一片染 — sakura pink) ── */
+.season-spring {
+  --c-bg:        #FEF5F7;
+  --c-surface:   #FFFFFF;
+  --c-surface-2: #FDF0F4;
+  --c-hero-from: #FFFFFF;
+  --c-hero-to:   #FBE0EA;
+  --c-accent-bg: #FCEEF4;
+
+  --c-text:   #2C1520;
+  --c-text-2: #7A3D52;
+  --c-text-3: #BF8898;
+
+  --c-accent:      #D15878;
+  --c-accent-dark: #B03860;
+
+  --c-border:   #F0C4D8;
+  --c-border-2: #E8ACCA;
+
+  --c-nav-bg: rgba(251, 224, 234, 0.88);
+
+  --c-tag-bg:     #FDF0F4;
+  --c-tag-text:   #7A3D52;
+  --c-tag-border: #F0C4D8;
+
+  --c-thumb-game-from: #FDF0F4;
+  --c-thumb-game-to:   #F0C4D8;
+
+  --c-blob-a: #F4B4CC;
+  --c-blob-b: #ED9EBC;
+  --c-blob-c: #F8CAD8;
+}
+
+/* ── Autumn theme (楓葉橘 — maple amber) ── */
+.season-autumn {
+  --c-bg:        #FBF4EE;
+  --c-surface:   #FFFFFF;
+  --c-surface-2: #F9F0E6;
+  --c-hero-from: #FFFFFF;
+  --c-hero-to:   #F8E8D4;
+  --c-accent-bg: #F8EAD8;
+
+  --c-text:   #231308;
+  --c-text-2: #7A4A24;
+  --c-text-3: #C09070;
+
+  --c-accent:      #C96418;
+  --c-accent-dark: #A84E10;
+
+  --c-border:   #ECCCA0;
+  --c-border-2: #E0B888;
+
+  --c-nav-bg: rgba(248, 232, 212, 0.88);
+
+  --c-tag-bg:     #F9F0E6;
+  --c-tag-text:   #7A4A24;
+  --c-tag-border: #ECCCA0;
+
+  --c-thumb-game-from: #F9F0E6;
+  --c-thumb-game-to:   #ECCCA0;
+
+  --c-blob-a: #E8B87A;
+  --c-blob-b: #E0A060;
+  --c-blob-c: #ECC890;
+}
+
+/* ── Winter theme (白縹色 — pale cerulean) ── */
+.season-winter {
+  --c-bg:        #F4F8FC;
+  --c-surface:   #FFFFFF;
+  --c-surface-2: #EEF4F9;
+  --c-hero-from: #FFFFFF;
+  --c-hero-to:   #E4F0F8;
+  --c-accent-bg: #E4EFF8;
+
+  --c-text:   #0C1C2C;
+  --c-text-2: #365878;
+  --c-text-3: #7498B8;
+
+  --c-accent:      #2E7CB8;
+  --c-accent-dark: #1C5E90;
+
+  --c-border:   #C0D4E8;
+  --c-border-2: #A8C4DE;
+
+  --c-nav-bg: rgba(228, 240, 248, 0.88);
+
+  --c-tag-bg:     #EEF4F9;
+  --c-tag-text:   #365878;
+  --c-tag-border: #C0D4E8;
+
+  --c-thumb-game-from: #EEF4F9;
+  --c-thumb-game-to:   #C0D4E8;
+
+  --c-blob-a: #A4C4DE;
+  --c-blob-b: #8CB4D4;
+  --c-blob-c: #B8D0E8;
+}
+
+/* ── Dark mode CSS variables (summer) ── */
+.dark {
+  --c-bg:        #0D1B0F;
+  --c-surface:   #152016;
+  --c-surface-2: #101A12;
+  --c-hero-from: #0D1B0F;
+  --c-hero-to:   #111E14;
+  --c-accent-bg: #0D2218;
+
+  --c-text:   #E4F2E6;
+  --c-text-2: #8AB88D;
+  --c-text-3: #4E6B52;
+
+  --c-accent:      #4ade80;
+  --c-accent-dark: #22c55e;
+
+  --c-border:   #1E3A22;
+  --c-border-2: #283E2A;
+
+  --c-nav-bg: rgba(12, 22, 14, 0.92);
+
+  --c-badge-game-bg:     #0D2A18;
+  --c-badge-game-text:   #4ade80;
+  --c-badge-game-border: #1A4028;
+  --c-badge-ex-bg:       #0D1A2A;
+  --c-badge-ex-text:     #93c5fd;
+  --c-badge-ex-border:   #1A2A40;
+  --c-badge-mu-bg:       #2A0D1A;
+  --c-badge-mu-text:     #f9a8d4;
+  --c-badge-mu-border:   #401A28;
+  --c-award-bg:          #2A2410;
+  --c-award-text:        #FCD34D;
+  --c-award-border:      #4A3E10;
+
+  --c-tag-bg:     #101A12;
+  --c-tag-text:   #8AB88D;
+  --c-tag-border: #1E3A22;
+
+  --c-thumb-game-from: #0D2014;
+  --c-thumb-game-to:   #162A18;
+  --c-thumb-ex-from:   #0D1A2A;
+  --c-thumb-ex-to:     #162238;
+  --c-thumb-mu-from:   #2A0D1A;
+  --c-thumb-mu-to:     #381622;
+
+  --c-blob-a: #1C5030;
+  --c-blob-b: #1E5C36;
+  --c-blob-c: #174428;
+}
+
+/* ── Dark spring (deep rose) ── */
+.dark.season-spring {
+  --c-bg:        #1C0A12;
+  --c-surface:   #281018;
+  --c-surface-2: #200C14;
+  --c-hero-from: #1C0A12;
+  --c-hero-to:   #1C0A12;
+  --c-accent-bg: #2E0E1C;
+
+  --c-text:   #F5E0E8;
+  --c-text-2: #BF8898;
+  --c-text-3: #7A4858;
+
+  --c-accent:      #F083A0;
+  --c-accent-dark: #E06388;
+
+  --c-border:   #3E1828;
+  --c-border-2: #502034;
+
+  --c-nav-bg: rgba(22, 8, 14, 0.92);
+
+  --c-tag-bg:     #200C14;
+  --c-tag-text:   #BF8898;
+  --c-tag-border: #3E1828;
+
+  --c-thumb-game-from: #200C14;
+  --c-thumb-game-to:   #3E1828;
+
+  --c-blob-a: #4E1A2A;
+  --c-blob-b: #5A2036;
+  --c-blob-c: #421424;
+}
+
+/* ── Dark autumn (deep amber) ── */
+.dark.season-autumn {
+  --c-bg:        #1A0D04;
+  --c-surface:   #251608;
+  --c-surface-2: #1C1004;
+  --c-hero-from: #1A0D04;
+  --c-hero-to:   #1A0D04;
+  --c-accent-bg: #2C1804;
+
+  --c-text:   #F5EAD8;
+  --c-text-2: #C09060;
+  --c-text-3: #7A5030;
+
+  --c-accent:      #E88038;
+  --c-accent-dark: #D06018;
+
+  --c-border:   #3A2008;
+  --c-border-2: #4C2C10;
+
+  --c-nav-bg: rgba(18, 10, 2, 0.92);
+
+  --c-tag-bg:     #1C1004;
+  --c-tag-text:   #C09060;
+  --c-tag-border: #3A2008;
+
+  --c-thumb-game-from: #1C1004;
+  --c-thumb-game-to:   #3A2008;
+
+  --c-blob-a: #4A2408;
+  --c-blob-b: #562E0E;
+  --c-blob-c: #3E1C04;
+}
+
+/* ── Dark winter (deep navy) ── */
+.dark.season-winter {
+  --c-bg:        #080E18;
+  --c-surface:   #0C1622;
+  --c-surface-2: #0A1220;
+  --c-hero-from: #080E18;
+  --c-hero-to:   #080E18;
+  --c-accent-bg: #0C1C30;
+
+  --c-text:   #D8E8F5;
+  --c-text-2: #6898B8;
+  --c-text-3: #385872;
+
+  --c-accent:      #5CAAE0;
+  --c-accent-dark: #4090C8;
+
+  --c-border:   #182840;
+  --c-border-2: #203050;
+
+  --c-nav-bg: rgba(5, 10, 18, 0.92);
+
+  --c-tag-bg:     #0A1220;
+  --c-tag-text:   #6898B8;
+  --c-tag-border: #182840;
+
+  --c-thumb-game-from: #0A1220;
+  --c-thumb-game-to:   #182840;
+
+  --c-blob-a: #162840;
+  --c-blob-b: #1A304C;
+  --c-blob-c: #122038;
+}
+
+/* ── Global color transition (smooth dark/light switching) ── */
+*, *::before, *::after {
+  box-sizing: border-box;
+  transition:
+    background-color 0.6s cubic-bezier(0.4, 0, 0.2, 1),
+    color            0.6s cubic-bezier(0.4, 0, 0.2, 1),
+    border-color     0.6s cubic-bezier(0.4, 0, 0.2, 1),
+    box-shadow       0.4s cubic-bezier(0.4, 0, 0.2, 1),
+    fill             0.6s cubic-bezier(0.4, 0, 0.2, 1),
+    stroke           0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Disable transition on elements that Framer Motion controls via transform/opacity */
+[data-framer-motion] { transition: none !important; }
+
+/* ── Hero gradient overlay (CSS can't interpolate gradients directly) ── */
+/* Fixed light-mode gradient fades in/out; background-color handles the base color transition */
+.hero-bg::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(160deg, var(--c-hero-from) 0%, var(--c-hero-to) 100%);
+  opacity: 1;
+  transition: opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.dark .hero-bg::before {
+  opacity: 0;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  margin: 0;
+  background-color: var(--c-bg);
+  color: var(--c-text);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#root {
+  width: 100%;
+  min-height: 100vh;
+}
+
+/* ── Modal injected HTML styles ── */
+.modal-html-content .modal-list {
+  padding-left: 1.25rem;
+  margin: 0.5rem 0 0.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+.modal-html-content .modal-list li {
+  font-size: 0.88rem;
+  color: var(--c-text-2);
+  line-height: 1.75;
+}
+
+/* Chart table (子午計畫) */
+.modal-html-content .chart-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.82rem;
+  color: var(--c-text-2);
+  margin-top: 0.5rem;
+}
+.modal-html-content .chart-table th,
+.modal-html-content .chart-table td {
+  padding: 0.35rem 0.65rem;
+  border: 1px solid var(--c-border);
+  text-align: center;
+}
+.modal-html-content .chart-table thead th {
+  background: var(--c-surface-2);
+  font-weight: 600;
+  color: var(--c-accent-dark);
+}
+.modal-html-content .chart-table .chart-char {
+  font-weight: 600;
+  background: var(--c-accent-bg);
+  vertical-align: middle;
+}
+.modal-html-content .chart-table .chart-song { text-align: left; }
+.modal-html-content .chart-table .diff-easy   { color: #2C8A5D; font-weight: 600; }
+.modal-html-content .chart-table .diff-normal { color: #2B5BA8; font-weight: 600; }
+.modal-html-content .chart-table .diff-hard   { color: #A0336A; font-weight: 600; }
+
+.dark .modal-html-content .chart-table .diff-easy   { color: #4ade80; }
+.dark .modal-html-content .chart-table .diff-normal { color: #93c5fd; }
+.dark .modal-html-content .chart-table .diff-hard   { color: #f9a8d4; }
+
+/* ── Story collapsible (音の散る道) ── */
+.modal-html-content .modal-story {
+  border: 1px solid var(--c-border);
+  border-radius: 10px;
+  margin-bottom: 8px;
+  overflow: hidden;
+}
+.modal-html-content .modal-story summary {
+  padding: 9px 14px;
+  cursor: pointer;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--c-accent-dark);
+  list-style: none;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  user-select: none;
+  transition: background 0.15s;
+}
+.modal-html-content .modal-story summary:hover {
+  background: var(--c-surface-2);
+}
+.modal-html-content .modal-story summary::before {
+  content: '▶';
+  font-size: 0.6rem;
+  transition: transform 0.2s;
+  flex-shrink: 0;
+}
+.modal-html-content .modal-story[open] summary::before {
+  transform: rotate(90deg);
+}
+.modal-html-content .modal-story-body {
+  padding: 4px 16px 14px;
+  border-top: 1px solid var(--c-border);
+  font-size: 0.84rem;
+  line-height: 2;
+  color: var(--c-text-2);
+}
+.modal-html-content .modal-story-body p {
+  margin: 0 0 0.5rem;
+}
