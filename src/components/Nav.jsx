@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import JuicyButton from './JuicyButton'
+import { SpringIcon, SummerIcon, AutumnIcon, WinterIcon } from './SeasonIcons'
 
 const SEASONS = [
   { id: 'spring', label: '春', color: '#D15878' },
@@ -9,72 +10,16 @@ const SEASONS = [
   { id: 'winter', label: '冬', color: '#2E7CB8' },
 ]
 
-/* ── Season icons (stroke-based, inherit currentColor) ── */
-
-function SpringIcon() {
-  // 5-petal sakura flower
-  return (
-    <svg width="20" height="20" viewBox="0 0 22 22" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round">
-      {[0, 72, 144, 216, 288].map(a => (
-        <ellipse key={a} cx="11" cy="6.4" rx="1.8" ry="2.8" transform={`rotate(${a} 11 11)`} />
-      ))}
-      <circle cx="11" cy="11" r="1.5" />
-    </svg>
-  )
-}
-
-function SummerIcon() {
-  // Rounded leaf with center vein
-  return (
-    <svg width="20" height="20" viewBox="0 0 22 22" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-      <path d="M11 19.5 C7.5 17.5 4 14.5 4 9.5 C4 5.9 7.1 3 11 3 C14.9 3 18 5.9 18 9.5 C18 14.5 14.5 17.5 11 19.5Z" />
-      <line x1="11" y1="3.5" x2="11" y2="19.5" />
-    </svg>
-  )
-}
-
-function AutumnIcon() {
-  // Simplified maple leaf
-  return (
-    <svg width="20" height="20" viewBox="0 0 22 22" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-      <path d="M11 2 L12.5 5.5 L16.5 4 L14.5 8 L18.5 9 L15 11.5 L17 15 L13 13.5 L11 17.5 L9 13.5 L5 15 L7 11.5 L3.5 9 L7.5 8 L5.5 4 L9.5 5.5 Z" />
-      <line x1="11" y1="17.5" x2="11" y2="21" />
-    </svg>
-  )
-}
-
-function WinterIcon() {
-  // Snowflake: 6 spokes with Y-branches
-  const cx = 11, cy = 11, R = 8, brR = 4.2, brLen = 2.6
-  const spokes = Array.from({ length: 6 }, (_, i) => {
-    const a = (i * 60 * Math.PI) / 180
-    const tx = cx + Math.cos(a) * R
-    const ty = cy + Math.sin(a) * R
-    const bx = cx + Math.cos(a) * brR
-    const by = cy + Math.sin(a) * brR
-    const pa = a + Math.PI / 2
-    return {
-      arm: [cx, cy, tx, ty],
-      b1:  [bx, by, bx + Math.cos(pa) * brLen, by + Math.sin(pa) * brLen],
-      b2:  [bx, by, bx - Math.cos(pa) * brLen, by - Math.sin(pa) * brLen],
-    }
-  })
-  return (
-    <svg width="20" height="20" viewBox="0 0 22 22" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round">
-      {spokes.map(({ arm, b1, b2 }, i) => (
-        <g key={i}>
-          <line x1={arm[0].toFixed(1)} y1={arm[1].toFixed(1)} x2={arm[2].toFixed(1)} y2={arm[3].toFixed(1)} />
-          <line x1={b1[0].toFixed(1)} y1={b1[1].toFixed(1)} x2={b1[2].toFixed(1)} y2={b1[3].toFixed(1)} />
-          <line x1={b2[0].toFixed(1)} y1={b2[1].toFixed(1)} x2={b2[2].toFixed(1)} y2={b2[3].toFixed(1)} />
-        </g>
-      ))}
-    </svg>
-  )
-}
-
 const SEASON_ICONS = { spring: SpringIcon, summer: SummerIcon, autumn: AutumnIcon, winter: WinterIcon }
 
-/* ── Dark mode icons ── */
+function LockIcon() {
+  return (
+    <svg width="9" height="9" viewBox="0 0 12 14" fill="currentColor">
+      <rect x="1.5" y="6" width="9" height="7" rx="1.5" />
+      <path d="M3.5 6V4a2.5 2.5 0 0 1 5 0v2" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
+    </svg>
+  )
+}
 
 function SunIcon() {
   return (
@@ -100,7 +45,7 @@ function MoonIcon() {
   )
 }
 
-export default function Nav({ dark, toggleDark, season, setSeason }) {
+export default function Nav({ dark, toggleDark, season, setSeason, unlockedSeasons }) {
   const [scrolled, setScrolled] = useState(false)
   const [hoveredSeason, setHoveredSeason] = useState(null)
 
@@ -109,6 +54,8 @@ export default function Nav({ dark, toggleDark, season, setSeason }) {
     window.addEventListener('scroll', onScroll, { passive: true })
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
+
+  const unlockedCount = unlockedSeasons?.length ?? 1
 
   return (
     <header
@@ -128,31 +75,56 @@ export default function Nav({ dark, toggleDark, season, setSeason }) {
         </JuicyButton>
 
         <nav className="flex items-center gap-5" aria-label="主選單">
-          {['Works', 'About'].map(label => (
-            <JuicyButton key={label} as="a" href={`#${label.toLowerCase()}`}>
+          {[{ label: 'Works', href: '#works' }, { label: 'About', href: '#top' }].map(({ label, href }) => (
+            <JuicyButton key={label} as="a" href={href}>
               <span className="text-sm font-medium hover:opacity-80 transition-opacity" style={{ color: 'var(--c-text-2)' }}>
                 {label}
               </span>
             </JuicyButton>
           ))}
 
-          <JuicyButton as="a" href="mailto:natsunohajimari0621@gmail.com">
-            <span className="text-sm font-medium px-4 py-1.5 rounded-lg text-white transition-colors"
-                  style={{ backgroundColor: 'var(--c-accent)' }}>
-              Contact
-            </span>
-          </JuicyButton>
-
           {/* Season + dark mode controls */}
           <div className="flex items-center gap-2.5">
 
             {/* Season icon buttons */}
-            <div className="flex items-center gap-0.5" role="group" aria-label="主題色系">
+            <div className="flex items-center gap-1.5" role="group" aria-label="主題色系">
               {SEASONS.map(s => {
                 const Icon = SEASON_ICONS[s.id]
-                const isActive  = season === s.id
-                const isHovered = hoveredSeason === s.id
-                const showColor = isActive || isHovered
+                const isUnlocked = unlockedSeasons?.includes(s.id) ?? s.id === 'summer'
+                const isActive   = season === s.id
+                const isHovered  = hoveredSeason === s.id
+                const showColor  = isActive || isHovered
+
+                if (!isUnlocked) {
+                  return (
+                    <div key={s.id} className="group relative">
+                      {/* Tooltip */}
+                      <div
+                        className="absolute top-full left-1/2 -translate-x-1/2 mt-2 z-10
+                                   opacity-0 group-hover:opacity-100 transition-opacity duration-150
+                                   whitespace-nowrap text-xs font-semibold px-2.5 py-1 rounded-lg
+                                   text-white pointer-events-none"
+                        style={{ backgroundColor: 'var(--c-text-2)' }}
+                      >
+                        尋找{s.label}日碎片解鎖
+                      </div>
+                      <div
+                        className="relative w-8 h-8 flex items-center justify-center rounded-md"
+                        style={{ color: 'var(--c-text-3)', opacity: 0.45, transform: 'scale(0.82)', cursor: 'not-allowed' }}
+                      >
+                        <Icon />
+                        <span
+                          className="absolute -top-0.5 -right-0.5 flex items-center justify-center
+                                     w-3.5 h-3.5 rounded-full"
+                          style={{ backgroundColor: 'var(--c-surface-2)', color: 'var(--c-text-3)' }}
+                        >
+                          <LockIcon />
+                        </span>
+                      </div>
+                    </div>
+                  )
+                }
+
                 return (
                   <motion.button
                     key={s.id}
@@ -161,8 +133,9 @@ export default function Nav({ dark, toggleDark, season, setSeason }) {
                     onHoverEnd={() => setHoveredSeason(null)}
                     aria-label={`${s.label}主題`}
                     title={`${s.label}主題`}
-                    whileHover={{ scale: 1.12 }}
-                    whileTap={{ scale: 0.9 }}
+                    animate={{ scale: isActive ? 0.88 : 0.82, opacity: isActive ? 0.7 : 0.45 }}
+                    whileHover={{ scale: 1.05, opacity: 1 }}
+                    whileTap={{ scale: 0.92, opacity: 1 }}
                     transition={{ type: 'spring', stiffness: 400, damping: 17 }}
                     className="w-8 h-8 flex items-center justify-center rounded-md"
                     style={{
@@ -178,12 +151,23 @@ export default function Nav({ dark, toggleDark, season, setSeason }) {
                   </motion.button>
                 )
               })}
+
+              {/* Unlock progress counter */}
+              {unlockedCount < 4 && (
+                <span
+                  className="ml-1 text-[0.6rem] font-semibold tabular-nums"
+                  style={{ color: 'var(--c-text-3)' }}
+                  title={`已解鎖 ${unlockedCount}/4 主題`}
+                >
+                  {unlockedCount}/4
+                </span>
+              )}
             </div>
 
             {/* Divider */}
             <div style={{ width: 1, height: 14, backgroundColor: 'var(--c-border)', flexShrink: 0 }} />
 
-            {/* Dark mode toggle — icon only, no border */}
+            {/* Dark mode toggle */}
             <JuicyButton
               as="button"
               onClick={toggleDark}

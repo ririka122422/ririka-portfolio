@@ -30,7 +30,7 @@ function parseDate(dateStr) {
   return parseInt(dateStr.replace('.', ''), 10)
 }
 
-export default function WorksSection() {
+export default function WorksSection({ collectible }) {
   const [filter, setFilter]         = useState('all')
   const [sortOrder, setSortOrder]   = useState('newest')
   const [selectedWork, setSelectedWork] = useState(null)
@@ -42,11 +42,14 @@ export default function WorksSection() {
   })
 
   return (
-    <section id="works" className="py-20 px-6">
+    <section id="works" className="relative overflow-hidden py-20 px-6">
       <div className="max-w-[1160px] mx-auto">
 
         <div className="mb-8">
-          <h2 className="text-[1.7rem] font-bold tracking-tight mb-1 m-0" style={{ color: 'var(--c-text)' }}>Works</h2>
+          <div className="relative inline-block mb-1">
+            <h2 className="text-[1.7rem] font-bold tracking-tight m-0" style={{ color: 'var(--c-text)' }}>Works</h2>
+            {collectible}
+          </div>
           <p className="text-sm" style={{ color: 'var(--c-text-3)' }}>遊戲製作・互動展覽・音樂媒體</p>
         </div>
 

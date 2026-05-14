@@ -2,6 +2,33 @@
 @tailwind components;
 @tailwind utilities;
 
+/* ── Register gradient color vars so CSS can interpolate them ── */
+@property --c-blob-a {
+  syntax: '<color>';
+  initial-value: #B2E8C4;
+  inherits: true;
+}
+@property --c-blob-b {
+  syntax: '<color>';
+  initial-value: #8EDCB0;
+  inherits: true;
+}
+@property --c-blob-c {
+  syntax: '<color>';
+  initial-value: #C4EDD4;
+  inherits: true;
+}
+@property --c-hero-from {
+  syntax: '<color>';
+  initial-value: #ffffff;
+  inherits: true;
+}
+@property --c-hero-to {
+  syntax: '<color>';
+  initial-value: #EDFAF0;
+  inherits: true;
+}
+
 /* ── Light mode CSS variables ── */
 :root {
   /* Backgrounds */
@@ -321,6 +348,16 @@
     stroke           0.6s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
+/* Transition the registered gradient color vars on :root so they interpolate */
+:root {
+  transition:
+    --c-blob-a    0.6s cubic-bezier(0.4, 0, 0.2, 1),
+    --c-blob-b    0.6s cubic-bezier(0.4, 0, 0.2, 1),
+    --c-blob-c    0.6s cubic-bezier(0.4, 0, 0.2, 1),
+    --c-hero-from 0.6s cubic-bezier(0.4, 0, 0.2, 1),
+    --c-hero-to   0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
 /* Disable transition on elements that Framer Motion controls via transform/opacity */
 [data-framer-motion] { transition: none !important; }
 
@@ -442,4 +479,76 @@ body {
 }
 .modal-html-content .modal-story-body p {
   margin: 0 0 0.5rem;
+}
+
+/* ── Season collectible animations ── */
+
+/* Normal idle pulse */
+@keyframes collectible-pulse {
+  0%, 100% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 var(--pulse-color);
+  }
+  50% {
+    transform: scale(1.13);
+    box-shadow: 0 0 18px 7px var(--pulse-color);
+  }
+}
+
+/* Intense pulse on hover */
+@keyframes collectible-pulse-intense {
+  0%, 100% {
+    transform: scale(1);
+    box-shadow: 0 0 8px 2px var(--pulse-color);
+  }
+  50% {
+    transform: scale(1.22);
+    box-shadow: 0 0 28px 12px var(--pulse-color);
+  }
+}
+
+/* Expanding ripple rings on hover */
+@keyframes hover-ripple {
+  0%   { transform: scale(1);   opacity: 0.65; }
+  100% { transform: scale(2.8); opacity: 0; }
+}
+
+/* Full-screen ripple rings on collect */
+@keyframes ring-expand-full {
+  0% {
+    width: 48px; height: 48px;
+    margin-left: -24px; margin-top: -24px;
+    border-width: 14px;
+    opacity: 0.9;
+  }
+  25% { border-width: 9px;  opacity: 0.68; }
+  50% { border-width: 5px;  opacity: 0.42; }
+  75% { border-width: 2px;  opacity: 0.18; }
+  100% {
+    width: 100vmax; height: 100vmax;
+    margin-left: -50vmax; margin-top: -50vmax;
+    border-width: 1px;
+    opacity: 0;
+  }
+}
+
+/* Collectible button fade-out on click */
+@keyframes collectible-fade-out {
+  0%   { opacity: 1;   transform: scale(1); }
+  100% { opacity: 0;   transform: scale(0.75); }
+}
+
+/* Click particle burst */
+@keyframes particle-fly {
+  0%   { transform: translate(-50%, -50%) scale(1);                                        opacity: 1; }
+  100% { transform: translate(calc(-50% + var(--tx)), calc(-50% + var(--ty))) scale(0.2); opacity: 0; }
+}
+
+/* Toast slide-up */
+@keyframes toast-slide-up {
+  from { opacity: 0; transform: translateX(-50%) translateY(14px); }
+  to   { opacity: 1; transform: translateX(-50%) translateY(0); }
+}
+.toast-enter {
+  animation: toast-slide-up 0.28s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
 }

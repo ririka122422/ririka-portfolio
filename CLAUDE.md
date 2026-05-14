@@ -90,6 +90,10 @@ The `MERIDIAN_CHART_DATA` and its HTML builder are also in `works.js`, storing t
 
 **Featured section:** `src/components/FeaturedWorks.jsx` has a `FEATURED_IDS` array at the top — only works whose `id` appears here are shown in the "精選" section. Order in the array determines display order.
 
+**WorksSection filter tabs:** `src/components/WorksSection.jsx` has hardcoded `TABS` with keys `all`, `game`, `exhibition`, `music`. These keys must match `work.category` values exactly. Sort options (`預設` / `最新` / `最舊`) sort by the `date` field (`'YYYY.MM'` format, compared as integers after removing the dot).
+
+**Anchor targets:** `Hero` has `id="top"` and `WorksSection` has `id="works"`. The nav link to `#about` has no matching element yet — that section is not yet implemented.
+
 **Project description files:** every project has a human-editable `作品集素材/<project-folder>/專案資訊.md` that mirrors its `works.js` entry. Edit the `.md` to draft changes, then apply them back to `works.js`. There are currently 15 projects.
 
 ### WorkModal internals
@@ -105,6 +109,7 @@ The `MERIDIAN_CHART_DATA` and its HTML builder are also in `works.js`, storing t
 |-------|---------|------|
 | Background blobs/leaves | implicit 0 | `Background.jsx` |
 | Main page content | `z-10` | `<main>` in App.jsx |
+| Sticky nav header | `z-50` | `Nav.jsx` |
 | WorkModal backdrop | `z-[100]` | blur overlay |
 | WorkModal panel | `z-[101]` | dialog sheet |
 | Lightbox | `z-[200]` | full-screen image zoom |
@@ -119,7 +124,7 @@ Add new overlay elements above `z-[200]` if they must sit over the lightbox.
 
 `作品集素材/` lives at the project root and is served directly by the Vite dev server. It is **not** inside `public/`, so it is **not** copied into `dist/` by `vite build`. For deployment, manually place the `作品集素材/` folder alongside `dist/` (or at the same level as `index.html`). The `base: './'` in `vite.config.js` ensures all asset paths are relative, so the site can be opened as a local file (`file://`) without a web server.
 
-There is currently **no git repository and no deployment pipeline** configured for this project.
+There is currently **no deployment pipeline** configured for this project.
 
 ### Legacy files
 
