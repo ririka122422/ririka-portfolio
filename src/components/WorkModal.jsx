@@ -216,6 +216,7 @@ export default function WorkModal({ work, onClose }) {
   useEffect(() => {
     if (!work) return
     document.body.style.overflow = 'hidden'
+    window.gtag?.('event', 'view_work', { work_id: work.id, work_title: work.title, category: work.category })
     return () => { document.body.style.overflow = '' }
   }, [work])
 
@@ -312,7 +313,7 @@ export default function WorkModal({ work, onClose }) {
                 </div>
 
                 {/* Scrollable body */}
-                <div className="flex-1 overflow-y-auto px-6 py-5">
+                <div className="flex-1 overflow-y-auto px-6 pt-5 pb-10">
                   {mainVideos.length > 0 && <VideoPlayer videos={mainVideos} />}
                   {(() => {
                     const hasPdf = work.sections?.some(s => s.anchor === 'pdf')

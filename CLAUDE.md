@@ -26,7 +26,12 @@ All colors are defined as CSS custom properties in `src/index.css`. Components u
 1. **Dark mode**: the `dark` class switches to a dark palette
 2. **Season**: `season-spring`, `season-autumn`, or `season-winter` override accent/surface/blob colors to sakura-pink, maple-amber, or pale-cerulean respectively. The default (no season class) is summer (grass-green).
 
-Combined states like `.dark.season-spring` are fully defined in `src/index.css`, giving 8 total theme combinations. Both dimensions are managed by `src/hooks/useTheme.js`, which persists `theme-dark` and `theme-season` to `localStorage`. (`src/hooks/useDarkMode.js` is a legacy hook, no longer used.)
+Combined states like `.dark.season-spring` are fully defined in `src/index.css`, giving 8 total theme combinations. Both dimensions are managed by `src/hooks/useTheme.js`, which persists state to `localStorage`:
+- `theme-dark` — `'true'` / `'false'`
+- `theme-season` — `'summer'` | `'spring'` | `'autumn'` | `'winter'`
+- `theme-unlocked-seasons` — JSON array, always includes `'summer'`
+
+(`src/hooks/useDarkMode.js` is a legacy hook, no longer used.)
 
 **Default is light mode, summer season** for new visitors — `useTheme` only restores previously saved `localStorage` values.
 
@@ -115,6 +120,31 @@ The `MERIDIAN_CHART_DATA` and its HTML builder are also in `works.js`, storing t
 | Lightbox | `z-[200]` | full-screen image zoom |
 
 Add new overlay elements above `z-[200]` if they must sit over the lightbox.
+
+### Season collectible system
+
+Spring, autumn, and winter seasons are **locked** by default and must be discovered by the user. Summer is always unlocked. `useTheme.setSeason` is guarded — it silently ignores requests to switch to a locked season. The Nav season switcher only renders buttons for `unlockedSeasons`.
+
+Each season has a `SeasonCollectible` button placed at a fixed position in the page:
+- **Spring** — top-right of the Hero section (`top-5 right-5`)
+- **Autumn** — left edge of WorksSection (absolutely positioned, overflows the section's left side)
+- **Winter** — right side of the footer
+
+The button is dim (`opacity: 0.35`) until hovered. Clicking it fires `App.handleCollect`, which:
+1. Starts a full-screen ripple (`ring-expand-full` keyframe, 2 rings with 300ms stagger, rendered in `App.jsx`)
+2. After 2150ms calls `unlockSeason(id, true)` — adds the season to `unlockedSeasons` and switches to it
+3. Shows a toast notification for ~3.2s
+
+Clicking the avatar in Hero fires `handleAvatarClick`, which triggers the same ripple effect then resets the season to summer.
+
+**CSS animations** for this system are defined in `src/index.css` (not Tailwind keyframes) because they use inline `animation:` strings with CSS custom properties like `--tx`/`--ty`:
+- `hover-ripple` — pulsing outline ring on hover
+- `particle-fly` — radial color burst on click (8 particles, uses `--tx`/`--ty`)
+- `collectible-fade-out`, `collectible-pulse`, `collectible-pulse-intense` — idle/hover/post-click button states
+- `ring-expand-full` — full-screen ripple expansion
+- `toast-enter` — toast slide-in
+
+**Dev panel** — visible only in `import.meta.env.DEV` mode, bottom-left of the page. Two buttons: reset unlocked seasons (clears `theme-unlocked-seasons` from localStorage) and unlock all seasons at once.
 
 ### Background animation
 

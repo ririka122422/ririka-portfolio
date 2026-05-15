@@ -19,6 +19,7 @@ export default function App() {
   const handleCollect = (id, { x, y }) => {
     const color = SEASON_COLORS[id]
     setRings({ x, y, color, id })
+    window.gtag?.('event', 'unlock_season', { season: id })
     // ring 2 ends at 1800ms + 300ms stagger = 2100ms → switch theme after
     setTimeout(() => {
       unlockSeason(id, true)
@@ -26,6 +27,12 @@ export default function App() {
       setRings(null)
     }, 2150)
     setTimeout(() => setToast(null), 2150 + 3200)
+  }
+
+  const handleReset = () => {
+    localStorage.removeItem('theme-unlocked-seasons')
+    localStorage.setItem('theme-season', 'summer')
+    location.reload()
   }
 
   const handleAvatarClick = ({ x, y }) => {
@@ -55,24 +62,37 @@ export default function App() {
         <FeaturedWorks />
         <WorksSection collectible={makeCollectible('autumn', 'top-1/2 -translate-y-1/2 left-full ml-2')} />
       </main>
-      <footer className="relative z-10 overflow-hidden border-t" style={{ backgroundColor: 'var(--c-surface)', borderColor: 'var(--c-border)' }}>
-        <div className="max-w-[1160px] mx-auto px-6 py-7 flex flex-wrap items-center justify-between gap-3">
-          <p className="text-sm m-0" style={{ color: 'var(--c-text-3)' }}>© 2025 范姜昱任 Ririka</p>
-          <div className="flex flex-wrap gap-5">
-            {[
-              { href: 'mailto:natsunohajimari0621@gmail.com', label: 'Email' },
-              { href: 'https://www.youtube.com/@natsuririka',  label: 'YouTube',     target: '_blank' },
-              { href: 'https://twitter.com/Ririka_122422',     label: 'Twitter / X', target: '_blank' },
-            ].map(({ href, label, target }) => (
-              <a key={label} href={href} target={target} rel={target ? 'noopener noreferrer' : undefined}
-                 className="text-sm transition-colors hover:opacity-80"
-                 style={{ color: 'var(--c-text-2)' }}>
-                {label}
-              </a>
-            ))}
+      <footer className="relative z-10 border-t" style={{ backgroundColor: 'var(--c-surface)', borderColor: 'var(--c-border)' }}>
+        <div className="relative">
+          <div className="max-w-[1160px] mx-auto px-6 py-7 flex flex-wrap items-center justify-between gap-3">
+            <p className="text-sm m-0" style={{ color: 'var(--c-text-3)' }}>© 2025 范姜昱任 Ririka</p>
+            <div className="flex flex-wrap gap-5">
+              {[
+                { href: 'mailto:natsunohajimari0621@gmail.com', label: 'Email' },
+                { href: 'https://www.youtube.com/@natsuririka',  label: 'YouTube',     target: '_blank' },
+                { href: 'https://twitter.com/Ririka_122422',     label: 'Twitter / X', target: '_blank' },
+              ].map(({ href, label, target }) => (
+                <a key={label} href={href} target={target} rel={target ? 'noopener noreferrer' : undefined}
+                   className="text-sm transition-colors hover:opacity-80"
+                   style={{ color: 'var(--c-text-2)' }}>
+                  {label}
+                </a>
+              ))}
+            </div>
           </div>
+          {makeCollectible('winter', 'top-1/2 -translate-y-1/2 right-5')}
         </div>
-        {makeCollectible('winter', 'top-1/2 -translate-y-1/2 right-5')}
+        {unlockedSeasons.length > 1 && (
+          <div className="pb-5 flex justify-center">
+            <button
+              onClick={handleReset}
+              className="text-xs hover:opacity-80 transition-opacity"
+              style={{ color: 'var(--c-text-3)' }}
+            >
+              ↺ 重置探索記錄
+            </button>
+          </div>
+        )}
       </footer>
 
       {/* Full-screen expanding ripple rings on collect */}
@@ -104,25 +124,6 @@ export default function App() {
         </div>
       )}
 
-      {/* Dev-only test panel */}
-      {import.meta.env.DEV && (
-        <div className="fixed bottom-4 left-4 z-[600] flex flex-col gap-1.5 text-xs">
-          <button
-            onClick={() => { localStorage.removeItem('theme-unlocked-seasons'); location.reload() }}
-            className="px-3 py-1.5 rounded-lg font-medium text-white shadow"
-            style={{ backgroundColor: '#64748b' }}
-          >
-            🔒 重置解鎖
-          </button>
-          <button
-            onClick={() => { localStorage.setItem('theme-unlocked-seasons', JSON.stringify(['summer','spring','autumn','winter'])); location.reload() }}
-            className="px-3 py-1.5 rounded-lg font-medium text-white shadow"
-            style={{ backgroundColor: '#64748b' }}
-          >
-            🔓 解鎖全部
-          </button>
-        </div>
-      )}
     </div>
   )
 }
