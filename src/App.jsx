@@ -1,4 +1,8 @@
 import { useState } from 'react'
+import { motion, AnimatePresence } from 'framer-motion'
+import { MdEmail } from 'react-icons/md'
+import { FaYoutube, FaDiscord, FaGithub } from 'react-icons/fa'
+import { FaXTwitter } from 'react-icons/fa6'
 import { useTheme } from './hooks/useTheme'
 import Background from './components/Background'
 import Nav from './components/Nav'
@@ -13,8 +17,16 @@ const ACCENT_COLORS  = { spring: '#D15878', summer: '#3DAA76', autumn: '#C96418'
 
 export default function App() {
   const { dark, toggleDark, season, setSeason, unlockedSeasons, unlockSeason } = useTheme()
-  const [toast, setToast]   = useState(null)
-  const [rings, setRings]   = useState(null) // { x, y, color, id }
+  const [toast, setToast]       = useState(null)
+  const [footerToast, setFooterToast] = useState(null)
+  const [rings, setRings]       = useState(null) // { x, y, color, id }
+
+  function handleFooterCopy(text) {
+    navigator.clipboard.writeText(text).then(() => {
+      setFooterToast(`已複製 ${text}`)
+      setTimeout(() => setFooterToast(null), 2200)
+    })
+  }
 
   const handleCollect = (id, { x, y }) => {
     const color = SEASON_COLORS[id]
@@ -61,26 +73,44 @@ export default function App() {
         <Hero collectible={makeCollectible('spring', 'top-5 right-5')} onAvatarClick={handleAvatarClick} />
         <FeaturedWorks />
         <WorksSection collectible={makeCollectible('autumn', 'top-1/2 -translate-y-1/2 left-full ml-2')} />
+        <div className="relative h-0">
+          {makeCollectible('winter', 'bottom-2 right-5')}
+        </div>
       </main>
       <footer className="relative z-10 border-t" style={{ backgroundColor: 'var(--c-surface)', borderColor: 'var(--c-border)' }}>
         <div className="relative">
           <div className="max-w-[1160px] mx-auto px-6 py-7 flex flex-wrap items-center justify-between gap-3">
-            <p className="text-sm m-0" style={{ color: 'var(--c-text-3)' }}>© 2025 范姜昱任 Ririka</p>
-            <div className="flex flex-wrap gap-5">
+            <p className="text-sm m-0" style={{ color: 'var(--c-text-3)' }}>© 2026 范姜昱任 Ririka</p>
+            <div className="relative flex flex-wrap gap-2">
               {[
-                { href: 'mailto:natsunohajimari0621@gmail.com', label: 'Email' },
-                { href: 'https://www.youtube.com/@natsuririka',  label: 'YouTube',     target: '_blank' },
-                { href: 'https://twitter.com/Ririka_122422',     label: 'Twitter / X', target: '_blank' },
-              ].map(({ href, label, target }) => (
-                <a key={label} href={href} target={target} rel={target ? 'noopener noreferrer' : undefined}
-                   className="text-sm transition-colors hover:opacity-80"
-                   style={{ color: 'var(--c-text-2)' }}>
-                  {label}
-                </a>
+                { copy: 'natsunohajimari0621@gmail.com', label: 'Email',       Icon: MdEmail },
+                { href: 'https://www.youtube.com/@natsuririka',  label: 'YouTube',    Icon: FaYoutube,  target: '_blank' },
+                { href: 'https://twitter.com/Ririka_122422',     label: 'Twitter / X',Icon: FaXTwitter, target: '_blank' },
+                { copy: 'natsunoririka',                         label: 'Discord',    Icon: FaDiscord },
+                { href: 'https://github.com/ririka122422',        label: 'GitHub',     Icon: FaGithub,   target: '_blank' },
+              ].map(({ href, label, target, Icon, copy }) => (
+                <div key={label} className="relative group">
+                  {copy ? (
+                    <button onClick={() => handleFooterCopy(copy)}
+                      className="w-9 h-9 flex items-center justify-center rounded-lg border transition-opacity hover:opacity-80"
+                      style={{ color: 'var(--c-text-2)', borderColor: 'var(--c-border-2)', backgroundColor: 'var(--c-surface-2)' }}>
+                      <Icon size={18} />
+                    </button>
+                  ) : (
+                    <a href={href} target={target} rel={target ? 'noopener noreferrer' : undefined}
+                       className="w-9 h-9 flex items-center justify-center rounded-lg border transition-opacity hover:opacity-80"
+                       style={{ color: 'var(--c-text-2)', borderColor: 'var(--c-border-2)', backgroundColor: 'var(--c-surface-2)' }}>
+                      <Icon size={18} />
+                    </a>
+                  )}
+                  <span className="pointer-events-none absolute -top-8 left-1/2 -translate-x-1/2 whitespace-nowrap rounded px-2 py-0.5 text-[0.72rem] opacity-0 group-hover:opacity-100 transition-opacity"
+                    style={{ backgroundColor: 'var(--c-surface-2)', color: 'var(--c-text-2)', border: '1px solid var(--c-border)' }}>
+                    {label}
+                  </span>
+                </div>
               ))}
             </div>
           </div>
-          {makeCollectible('winter', 'top-1/2 -translate-y-1/2 right-5')}
         </div>
         {unlockedSeasons.length > 1 && (
           <div className="pb-5 flex justify-center">
@@ -110,6 +140,23 @@ export default function App() {
           }}
         />
       ))}
+
+      {/* Footer copy toast */}
+      <AnimatePresence>
+        {footerToast && (
+          <motion.div
+            key="footer-toast"
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 6 }}
+            transition={{ type: 'spring', stiffness: 340, damping: 26 }}
+            className="fixed bottom-6 left-1/2 -translate-x-1/2 z-[300] px-5 py-2.5 rounded-xl text-sm font-medium shadow-lg pointer-events-none"
+            style={{ backgroundColor: 'var(--c-text)', color: 'var(--c-bg)', whiteSpace: 'nowrap' }}
+          >
+            {footerToast}
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       {/* Toast notification */}
       {toast && (

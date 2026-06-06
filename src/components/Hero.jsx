@@ -1,5 +1,8 @@
 import { useState, useRef } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
+import { MdEmail } from 'react-icons/md'
+import { FaYoutube, FaDiscord, FaGithub } from 'react-icons/fa'
+import { FaXTwitter } from 'react-icons/fa6'
 import JuicyButton from './JuicyButton'
 
 const CONTAINER = {
@@ -12,10 +15,11 @@ const ITEM = {
 }
 
 const SOCIAL_LINKS = [
-  { copy: 'natsunohajimari0621@gmail.com', label: 'Email' },
-  { href: 'https://www.youtube.com/@natsuririka', label: 'YouTube',     external: true },
-  { href: 'https://twitter.com/Ririka_122422',    label: 'Twitter / X', external: true },
-  { copy: 'natsunoririka',                        label: 'Discord' },
+  { copy: 'natsunohajimari0621@gmail.com', label: 'Email',      Icon: MdEmail },
+  { href: 'https://www.youtube.com/@natsuririka', label: 'YouTube',  Icon: FaYoutube,  external: true },
+  { href: 'https://twitter.com/Ririka_122422',    label: 'Twitter / X', Icon: FaXTwitter, external: true },
+  { copy: 'natsunoririka',                        label: 'Discord',   Icon: FaDiscord },
+  { href: 'https://github.com/ririka122422',       label: 'GitHub',    Icon: FaGithub,   external: true },
 ]
 
 export default function Hero({ collectible, onAvatarClick }) {
@@ -85,38 +89,48 @@ export default function Hero({ collectible, onAvatarClick }) {
               興趣是故事創作、唱日K、追 Vt，另外還有日文檢定 N2。
             </motion.p>
 
-            <motion.div variants={ITEM} className="flex flex-wrap gap-2.5 mb-4">
-              {SOCIAL_LINKS.map(({ href, label, external, copy }) =>
+            <motion.div variants={ITEM} className="flex flex-wrap gap-2 mb-4">
+              {SOCIAL_LINKS.map(({ href, label, external, copy, Icon }) =>
                 copy ? (
-                  <JuicyButton
-                    key={label}
-                    as="button"
-                    onClick={() => handleCopy(copy)}
-                    className="px-4 py-2 text-[0.85rem] font-medium rounded-lg border transition-opacity hover:opacity-80"
-                    style={{
-                      color:           'var(--c-text-2)',
-                      borderColor:     'var(--c-border-2)',
-                      backgroundColor: 'var(--c-surface)',
-                    }}
-                  >
-                    {label}
-                  </JuicyButton>
+                  <div key={label} className="relative group">
+                    <JuicyButton
+                      as="button"
+                      onClick={() => handleCopy(copy)}
+                      className="w-10 h-10 flex items-center justify-center rounded-lg border transition-opacity hover:opacity-80"
+                      style={{
+                        color:           'var(--c-text-2)',
+                        borderColor:     'var(--c-border-2)',
+                        backgroundColor: 'var(--c-surface)',
+                      }}
+                    >
+                      <Icon size={20} />
+                    </JuicyButton>
+                    <span className="pointer-events-none absolute -top-8 left-1/2 -translate-x-1/2 whitespace-nowrap rounded px-2 py-0.5 text-[0.72rem] opacity-0 group-hover:opacity-100 transition-opacity"
+                      style={{ backgroundColor: 'var(--c-surface-2)', color: 'var(--c-text-2)', border: '1px solid var(--c-border)' }}>
+                      {label}
+                    </span>
+                  </div>
                 ) : (
-                  <JuicyButton
-                    key={label}
-                    as="a"
-                    href={href}
-                    target={external ? '_blank' : undefined}
-                    rel={external ? 'noopener noreferrer' : undefined}
-                    className="px-4 py-2 text-[0.85rem] font-medium rounded-lg border transition-opacity hover:opacity-80"
-                    style={{
-                      color:           'var(--c-text-2)',
-                      borderColor:     'var(--c-border-2)',
-                      backgroundColor: 'var(--c-surface)',
-                    }}
-                  >
-                    {label}
-                  </JuicyButton>
+                  <div key={label} className="relative group">
+                    <JuicyButton
+                      as="a"
+                      href={href}
+                      target={external ? '_blank' : undefined}
+                      rel={external ? 'noopener noreferrer' : undefined}
+                      className="w-10 h-10 flex items-center justify-center rounded-lg border transition-opacity hover:opacity-80"
+                      style={{
+                        color:           'var(--c-text-2)',
+                        borderColor:     'var(--c-border-2)',
+                        backgroundColor: 'var(--c-surface)',
+                      }}
+                    >
+                      <Icon size={20} />
+                    </JuicyButton>
+                    <span className="pointer-events-none absolute -top-8 left-1/2 -translate-x-1/2 whitespace-nowrap rounded px-2 py-0.5 text-[0.72rem] opacity-0 group-hover:opacity-100 transition-opacity"
+                      style={{ backgroundColor: 'var(--c-surface-2)', color: 'var(--c-text-2)', border: '1px solid var(--c-border)' }}>
+                      {label}
+                    </span>
+                  </div>
                 )
               )}
             </motion.div>
