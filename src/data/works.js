@@ -70,6 +70,7 @@ export const WORKS = [
     award: '放視大賞入圍',
     links: [
       { label: '下載遊戲', url: 'https://drive.google.com/drive/folders/1jFLqbHjpDYa8B8JilGZe1MUD8FAXC72y?usp=drive_link' },
+      { label: 'GitHub', url: 'https://github.com/ririka122422/Tenkinoko' },
     ],
     primaryVideo: { type: 'yt', id: 'hSQnW1BvE5o', label: '宣傳 PV' },
     extraVideos: [],
@@ -160,6 +161,9 @@ export const WORKS = [
     tags: ['節奏遊戲', '2D', 'Unity', 'Vtuber', '手機遊戲'],
     thumbnail: '作品集素材/子午計畫主題音遊/子午音遊封面.png',
     primaryVideo: { type: 'yt', id: 'xeerf-Wdafk', label: 'Demo 影片' },
+    links: [
+      { label: 'GitHub', url: 'https://github.com/ririka122422/Meridian_RhythmMusicGame' },
+    ],
     extraVideos: [
       { type: 'drive', id: '1GtkcjyKh7Z-TiZbreb30qVSEAk3fXndm', label: '同學試玩 1' },
       { type: 'drive', id: '1ZUbbwuIlZUcMFc14vhrDNvinUhWA_bzR', label: '同學試玩 2' },
